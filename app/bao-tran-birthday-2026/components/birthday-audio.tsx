@@ -14,6 +14,7 @@ import {
   BIRTHDAY_THEME_MP3,
   BIRTHDAY_THEME_OGG,
   BLOW_FRAMES_REQUIRED,
+  BLOW_PEAK_THRESHOLD,
   BLOW_RMS_THRESHOLD,
   MIC_WARMUP_MS,
 } from "./constants";
@@ -160,7 +161,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
         audio: {
           echoCancellation: false,
           noiseSuppression: false,
-          autoGainControl: false,
+          autoGainControl: true,
         },
       });
       streamRef.current = stream;
@@ -168,8 +169,8 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
       await ctx.resume();
       const src = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
-      analyser.fftSize = 1024;
-      analyser.smoothingTimeConstant = 0.25;
+      analyser.fftSize = 512;
+      analyser.smoothingTimeConstant = 0.05;
       src.connect(analyser);
       ctxRef.current = ctx;
       analyserRef.current = analyser;
@@ -192,14 +193,23 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
       if (doneRef.current) return;
       analyser.getFloatTimeDomainData(buf);
       let sum = 0;
-      for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+      let peak = 0;
+      for (let i = 0; i < buf.length; i++) {
+        const v = Math.abs(buf[i]!);
+        if (v > peak) peak = v;
+        sum += buf[i]! * buf[i]!;
+      }
       const rms = Math.sqrt(sum / buf.length);
-      setMeter(Math.min(1, rms * 16));
+      setMeter(Math.min(1, Math.max(rms * 20, peak * 10)));
 
       const warmed =
         performance.now() - micStartedAtRef.current > MIC_WARMUP_MS;
 
-      if (warmed && rms > BLOW_RMS_THRESHOLD) {
+      const puff =
+        warmed &&
+        (rms > BLOW_RMS_THRESHOLD || peak > BLOW_PEAK_THRESHOLD);
+
+      if (puff) {
         blowStreakRef.current += 1;
         if (blowStreakRef.current >= BLOW_FRAMES_REQUIRED) {
           doneRef.current = true;
@@ -211,8 +221,8 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
           return;
         }
       } else {
-        // Decay slowly so soft / intermittent puffs still count.
-        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.2);
+        // Almost no decay — any soft sound near the mic stacks quickly.
+        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.05);
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -267,7 +277,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
         ) : (
           <div className="space-y-2 text-center">
             <p className="font-[family-name:var(--font-be-vietnam-pro)] text-sm text-amber-100">
-              Đang nghe mic… <span className="text-white">Thổi mạnh vào mic</span>
+              Đang nghe mic… <span className="text-white">Thổi nhẹ gần mic</span>
             </p>
             <div
               className="h-2 w-full overflow-hidden rounded-full bg-slate-800"
