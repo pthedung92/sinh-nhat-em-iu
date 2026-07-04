@@ -211,7 +211,8 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
           return;
         }
       } else {
-        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.65);
+        // Decay slowly so soft / intermittent puffs still count.
+        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.2);
       }
 
       rafRef.current = requestAnimationFrame(tick);

@@ -62,9 +62,11 @@ export const BIRTHDAY_THEME_MP3 =
 export const BIRTHDAY_THEME_OGG =
   "/audio/bao-tran-birthday-2026/sinh-nhat-2026.ogg";
 
-export const BLOW_RMS_THRESHOLD = 0.03;
-export const BLOW_FRAMES_REQUIRED = 14;
-export const MIC_WARMUP_MS = 350;
+/** Lower = easier to trigger with a soft blow. */
+export const BLOW_RMS_THRESHOLD = 0.012;
+/** Fewer frames = shorter blow needed (~5 frames ≈ instant soft puff). */
+export const BLOW_FRAMES_REQUIRED = 5;
+export const MIC_WARMUP_MS = 200;
 
 export const STICKER_PINK =
   "font-bold uppercase tracking-wide text-[#a78bfa] [text-shadow:_2px_0_0_#fff,_-2px_0_0_#fff,_0_2px_0_#fff,_0_-2px_0_#fff,_1.5px_1.5px_0_#fff,_-1.5px_-1.5px_0_#fff,_1.5px_-1.5px_0_#fff,_-1.5px_1.5px_0_#fff]";
