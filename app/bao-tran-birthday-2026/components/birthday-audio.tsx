@@ -249,7 +249,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
         Thổi nến nhé 🎂
       </p>
       <p className="mt-2 max-w-md text-center font-[family-name:var(--font-be-vietnam-pro)] text-sm text-violet-200/90">
-        Bật micro, rồi <strong className="text-white">thổi vào mic khoảng 1–2 giây</strong> (vừa phải là được)
+        em iu thổi vừa phải thui nheee
       </p>
 
       <div className="relative mt-8 flex flex-col items-center gap-1">
