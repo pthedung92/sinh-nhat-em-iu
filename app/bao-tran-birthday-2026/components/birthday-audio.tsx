@@ -222,7 +222,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
           return;
         }
       } else {
-        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.35);
+        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.4);
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -249,7 +249,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
         Thổi nến nhé 🎂
       </p>
       <p className="mt-2 max-w-md text-center font-[family-name:var(--font-be-vietnam-pro)] text-sm text-violet-200/90">
-        Bật micro, rồi <strong className="text-white">thổi vào mic 1–2 giây</strong> (nhẹ vừa phải là được)
+        Bật micro, rồi <strong className="text-white">thổi vào mic khoảng 1–2 giây</strong> (vừa phải là được)
       </p>
 
       <div className="relative mt-8 flex flex-col items-center gap-1">
