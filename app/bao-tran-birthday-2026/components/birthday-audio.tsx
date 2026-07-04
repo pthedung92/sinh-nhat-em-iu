@@ -161,7 +161,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
         audio: {
           echoCancellation: false,
           noiseSuppression: false,
-          autoGainControl: true,
+          autoGainControl: false,
         },
       });
       streamRef.current = stream;
@@ -169,8 +169,8 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
       await ctx.resume();
       const src = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
-      analyser.fftSize = 512;
-      analyser.smoothingTimeConstant = 0.05;
+      analyser.fftSize = 1024;
+      analyser.smoothingTimeConstant = 0.12;
       src.connect(analyser);
       ctxRef.current = ctx;
       analyserRef.current = analyser;
@@ -207,7 +207,8 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
 
       const puff =
         warmed &&
-        (rms > BLOW_RMS_THRESHOLD || peak > BLOW_PEAK_THRESHOLD);
+        peak > BLOW_PEAK_THRESHOLD &&
+        rms > BLOW_RMS_THRESHOLD;
 
       if (puff) {
         blowStreakRef.current += 1;
@@ -221,8 +222,7 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
           return;
         }
       } else {
-        // Almost no decay — any soft sound near the mic stacks quickly.
-        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.05);
+        blowStreakRef.current = Math.max(0, blowStreakRef.current - 0.35);
       }
 
       rafRef.current = requestAnimationFrame(tick);
