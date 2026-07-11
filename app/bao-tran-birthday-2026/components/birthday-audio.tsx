@@ -54,7 +54,7 @@ function CandleFlame({
         }
         transition={
           extinguished
-            ? { duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] as const }
+            ? { duration: 1.0, delay: index * 0.18, ease: [0.22, 1, 0.36, 1] as const }
             : { duration: 0.55 + index * 0.04, repeat: Infinity, ease: "easeInOut" }
         }
       />
@@ -230,9 +230,9 @@ function BirthdayCandleSplash({
           setMicListening(false);
           setExtinguished(true);
           stopMic();
-          window.setTimeout(() => onBalloonsStartRef.current(), 200);
+          window.setTimeout(() => onBalloonsStartRef.current(), 950);
           // Scrapbook mounts behind the balloon curtain (still fully covered)
-          window.setTimeout(() => onCompleteRef.current(), 450);
+          window.setTimeout(() => onCompleteRef.current(), 1350);
           return;
         }
       } else {
