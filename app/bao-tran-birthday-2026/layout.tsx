@@ -28,7 +28,7 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   title: "Bảo Trân — sinh nhật 2026 ✦",
   description:
-    "Một trang scrapbook chúc mừng sinh nhật Bảo Trân — ảnh và lời chúc (placeholder).",
+    "Một trang scrapbook chúc mừng sinh nhật Bảo Trân — ảnh và lời chúc.",
 };
 
 export default function BaoTranBirthday2026Layout({
