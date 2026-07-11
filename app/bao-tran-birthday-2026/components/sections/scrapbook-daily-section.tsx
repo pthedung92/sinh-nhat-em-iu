@@ -12,7 +12,7 @@ export function ScrapbookDailySection() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-60px" }}
-      className="relative overflow-visible rounded-3xl border-2 border-violet-200/90 bg-violet-50/95 p-8 shadow-[8px_8px_0_rgba(124,58,237,0.12)] backdrop-blur-sm lg:col-span-2"
+      className="scrapbook-liquid-glass relative overflow-visible rounded-3xl p-8 lg:col-span-2"
     >
       <p className="text-sm font-semibold uppercase tracking-widest text-violet-500">
         Chơi cùng nhau

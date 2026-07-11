@@ -76,7 +76,7 @@ export function ScrapbookCalendarSection() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-60px" }}
-      className="relative overflow-visible rounded-3xl border-2 border-slate-800/10 bg-white/92 p-4 shadow-[8px_8px_0_rgba(15,23,42,0.07)] sm:p-6"
+      className="scrapbook-liquid-glass relative overflow-visible rounded-3xl p-4 sm:p-6"
     >
       <div className="absolute right-3 top-3 z-20 rounded-full bg-yellow-200 px-3 py-1 text-xs font-bold text-slate-800 shadow-sm sm:right-4 sm:top-4 sm:text-sm">
         Make a wish!

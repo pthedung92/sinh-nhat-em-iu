@@ -9,7 +9,7 @@ import {
 } from "./components/constants";
 import { DesktopOnlyOverlay } from "./components/desktop-only-overlay";
 import { DenimRecapCollage } from "./components/denim-recap-section";
-import { HeartBackgroundField, hl } from "./components/doodles";
+import { HeartBackgroundField } from "./components/doodles";
 import { ScrapbookCalendarSection } from "./components/sections/scrapbook-calendar-section";
 import { ScrapbookDailySection } from "./components/sections/scrapbook-daily-section";
 import { ScrapbookIntroSection } from "./components/sections/scrapbook-intro-section";
@@ -40,15 +40,15 @@ export default function BaoTranBirthdayShowcase() {
           <img
             src={BIRTHDAY_PAGE_BG}
             alt=""
-            className="h-full min-h-[100dvh] w-full object-cover object-center [filter:saturate(0.88)_brightness(1.04)_contrast(0.96)]"
+            className="h-full min-h-[100dvh] w-full object-cover object-center"
             fetchPriority="low"
           />
           <div
-            className="absolute inset-0 bg-gradient-to-b from-[#fffdfb]/52 via-[#f6f4fb]/76 to-[#faf8f4]/90"
+            className="absolute inset-0 bg-gradient-to-b from-sky-50/25 via-transparent to-white/35"
             aria-hidden
           />
           <div
-            className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_45%,transparent_0%,rgba(255,255,255,0.38)_100%)]"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,rgba(255,255,255,0.18)_100%)]"
             aria-hidden
           />
         </div>
@@ -90,13 +90,16 @@ export default function BaoTranBirthdayShowcase() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-10 text-center"
+            className="scrapbook-liquid-glass mb-10 rounded-3xl px-5 py-6 text-center sm:px-8 sm:py-7"
           >
-            <p className="font-[family-name:var(--font-be-vietnam-pro)] text-sm uppercase tracking-[0.2em] text-violet-500">
+            <p className="font-[family-name:var(--font-be-vietnam-pro)] text-sm font-bold uppercase tracking-[0.2em] text-violet-500">
               13 . 07
             </p>
-            <h1 className="mt-2 font-[family-name:var(--font-nunito)] text-3xl font-extrabold sm:text-4xl">
-              Sinh nhật của xinh nhất {hl(" Phạm Trần Bảo Trân", "bg-violet-200")}
+            <h1 className="mt-2 font-[family-name:var(--font-nunito)] text-3xl font-extrabold text-slate-900 sm:text-4xl">
+              Sinh nhật của xinh nhất{" "}
+              <span className="rounded-lg bg-violet-100 px-2 py-0.5 shadow-sm ring-1 ring-violet-200/90">
+                Phạm Trần Bảo Trân
+              </span>
             </h1>
           </motion.header>
 

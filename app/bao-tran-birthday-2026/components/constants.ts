@@ -19,7 +19,7 @@ export const floatSlow = {
 export const PLACEHOLDER_IMG = (seed: string, w = 400, h = 500) =>
   `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
-export const BIRTHDAY_PAGE_BG = "/images/bao-tran-birthday/2026/bg.webp";
+export const BIRTHDAY_PAGE_BG = "/images/bao-tran-birthday/2026/bg-liquid-blue.png";
 
 /**
  * Dán link chia sẻ video Google Drive (File → Share → Anyone with the link can view).

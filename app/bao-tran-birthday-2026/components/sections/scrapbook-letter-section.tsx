@@ -1,9 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Fragment } from "react";
 import { fadeUp, PLACEHOLDER_IMG } from "../constants";
 import { hl } from "../doodles";
 import { PhotoFrame } from "../photo-elements";
+
+const LETTER_PHOTOS = [
+  { src: "/images/bao-tran-birthday/2026/bao-tran-28.png", alt: "Letter collage 1" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-13.jpg", alt: "Letter collage 2" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-14.jpg", alt: "Letter collage 3" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-18.png", alt: "Letter collage 4" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-19.png", alt: "Letter collage 5" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-20.png", alt: "Letter collage 6" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-21.png", alt: "Letter collage 7" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-22.png", alt: "Letter collage 8" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-23.png", alt: "Letter collage 9" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-24.png", alt: "Letter collage 10" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-25.png", alt: "Letter collage 11" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-26.png", alt: "Letter collage 12" },
+  { src: "/images/bao-tran-birthday/2026/bao-tran-27.png", alt: "Letter collage 13" },
+] as const;
 
 export function ScrapbookLetterSection() {
   return (
@@ -13,12 +30,12 @@ export function ScrapbookLetterSection() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-60px" }}
-      className="relative rounded-3xl border-2 border-slate-800/10 bg-white/92 p-6 shadow-[8px_8px_0_rgba(15,23,42,0.07)] lg:col-span-2"
+      className="scrapbook-liquid-glass relative rounded-3xl p-6 lg:col-span-2"
     >
       <h2 className="font-[family-name:var(--font-nunito)] text-2xl font-bold text-violet-500">
         Happy Birthday {hl("Bảo Trân", "bg-violet-100")}
       </h2>
-      <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-start">
+      <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-stretch">
         <div className="font-[family-name:var(--font-be-vietnam-pro)] flex-1 space-y-4 text-base leading-relaxed text-slate-700">
           <p>Gửi công chúa của anh ❤️</p>
           <p>
@@ -125,28 +142,27 @@ export function ScrapbookLetterSection() {
             Mong rằng đây sẽ chỉ là sinh nhật đầu tiên trong rất nhiều sinh nhật
             sau này mà anh được ở bên cạnh em.
           </p>
-          <p>Anh yêu em❤️.</p>
-          <span className="mt-2 block text-violet-500">
-            Thế Dũng - anh iu của em ✎
-          </span>
         </div>
-        <div className="flex shrink-0 gap-2 lg:flex-col">
-          <PhotoFrame
-            src='/images/bao-tran-birthday/2026/bao-tran-12.jpg'
-            alt="Letter collage 1"
-            className="h-24 w-24"
-          />
-          <PhotoFrame
-            src='/images/bao-tran-birthday/2026/bao-tran-13.jpg'
-            alt="Letter collage 2"
-            className="h-24 w-24"
-          />
-          <PhotoFrame
-            src='/images/bao-tran-birthday/2026/bao-tran-14.jpg'
-            alt="Letter collage 3"
-            className="h-24 w-24"
-          />
+        <div className="flex w-full shrink-0 flex-row flex-wrap gap-2 self-stretch lg:w-24 lg:flex-col lg:flex-nowrap lg:gap-0">
+          {LETTER_PHOTOS.map((photo, index) => (
+            <Fragment key={photo.src}>
+              {index > 0 ? (
+                <div className="hidden min-h-3 flex-1 lg:block" aria-hidden />
+              ) : null}
+              <PhotoFrame
+                src={photo.src}
+                alt={photo.alt}
+                className="h-24 w-24"
+              />
+            </Fragment>
+          ))}
         </div>
+      </div>
+      <div className="mt-4 space-y-4 font-[family-name:var(--font-be-vietnam-pro)] text-base leading-relaxed text-slate-700">
+        <p>Anh yêu em❤️.</p>
+        <span className="mt-2 block text-violet-500">
+          Thế Dũng - anh iu của em ✎
+        </span>
       </div>
     </motion.section>
   );

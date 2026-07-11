@@ -203,8 +203,8 @@ export function BalloonRiseOverlay({
           <style>{FX_CSS}</style>
 
           <motion.div
-            className="absolute inset-0 bg-gradient-to-b from-violet-100 via-rose-50 to-amber-50"
-            initial={{ opacity: 1 }}
+            className="absolute inset-0 bg-gradient-to-b from-violet-50/90 via-rose-50/88 to-amber-50/90 backdrop-blur-md"
+            initial={{ opacity: 0.92 }}
             animate={{ opacity: 0 }}
             transition={{
               duration: 0.85,
