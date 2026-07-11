@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { BalloonRiseOverlay } from "./balloon-rise-overlay";
 import {
   BIRTHDAY_THEME_MP3,
   BIRTHDAY_THEME_OGG,
@@ -119,12 +120,23 @@ function SplashBirthdayCake({ className = "" }: { className?: string }) {
   );
 }
 
-function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
+function BirthdayCandleSplash({
+  onComplete,
+  onBalloonsStart,
+}: {
+  onComplete: () => void;
+  onBalloonsStart: () => void;
+}) {
   const onCompleteRef = useRef(onComplete);
+  const onBalloonsStartRef = useRef(onBalloonsStart);
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
+
+  useEffect(() => {
+    onBalloonsStartRef.current = onBalloonsStart;
+  }, [onBalloonsStart]);
 
   const [micError, setMicError] = useState<string | null>(null);
   const [micListening, setMicListening] = useState(false);
@@ -218,7 +230,9 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
           setMicListening(false);
           setExtinguished(true);
           stopMic();
-          window.setTimeout(() => onCompleteRef.current(), 950);
+          window.setTimeout(() => onBalloonsStartRef.current(), 200);
+          // Scrapbook mounts behind the balloon curtain (still fully covered)
+          window.setTimeout(() => onCompleteRef.current(), 450);
           return;
         }
       } else {
@@ -304,6 +318,8 @@ function BirthdayCandleSplash({ onComplete }: { onComplete: () => void }) {
 export function BirthdayAudioRoot({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [entered, setEntered] = useState(false);
+  const [showBalloons, setShowBalloons] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
 
   const finishSplash = useCallback(() => {
     const el = audioRef.current;
@@ -312,6 +328,23 @@ export function BirthdayAudioRoot({ children }: { children: ReactNode }) {
       void el.play().catch(() => {});
     }
     setEntered(true);
+  }, []);
+
+  const startBalloons = useCallback(() => {
+    setShowBalloons(true);
+  }, []);
+
+  const finishBalloons = useCallback(() => {
+    setShowBalloons(false);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("previewBalloons") === "1") {
+      setPreviewMode(true);
+      setEntered(true);
+      setShowBalloons(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -336,7 +369,23 @@ export function BirthdayAudioRoot({ children }: { children: ReactNode }) {
         <source src={BIRTHDAY_THEME_MP3} type="audio/mpeg" />
       </audio>
 
-      {!entered ? <BirthdayCandleSplash onComplete={finishSplash} /> : null}
+      {!entered ? (
+        <BirthdayCandleSplash
+          onBalloonsStart={startBalloons}
+          onComplete={finishSplash}
+        />
+      ) : null}
+      {showBalloons ? <BalloonRiseOverlay onComplete={finishBalloons} /> : null}
+
+      {previewMode ? (
+        <button
+          type="button"
+          onClick={() => setShowBalloons(true)}
+          className="fixed bottom-6 right-6 z-[220] rounded-2xl border-2 border-violet-300 bg-white/95 px-4 py-2.5 font-[family-name:var(--font-be-vietnam-pro)] text-sm font-semibold text-violet-700 shadow-lg"
+        >
+          Xem lại bóng bay
+        </button>
+      ) : null}
 
       {children}
     </BirthdayAudioContext.Provider>
