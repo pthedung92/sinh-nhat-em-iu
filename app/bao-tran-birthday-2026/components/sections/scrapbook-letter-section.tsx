@@ -72,8 +72,7 @@ export function ScrapbookLetterSection() {
           </p>
           <p>
             Anh không biết phải nói sao để em hiểu rằng anh thương em nhiều đến
-            mức nào. Anh biết tụi mình gặp nhau chưa lâu, chưa có gì là chắc
-            chắn cả... nhưng mỗi ngày trôi qua, tình cảm anh dành cho em lại lớn
+            mức nào. Nhưng mỗi ngày trôi qua, tình cảm anh dành cho em lại lớn
             hơn một chút. Chưa từng nhỏ đi, chỉ có ngày càng nhiều hơn.
           </p>
           <p>
@@ -85,14 +84,7 @@ export function ScrapbookLetterSection() {
             Em là người khiến anh cảm nhận được yêu, được thương, được trân
             trọng và được là chính mình. Em đã thay đổi anh rất nhiều, từ cách
             sống, cách giao tiếp cho đến việc biết quan tâm và để ý nhiều thứ
-            hơn. Có lẽ trước đây anh không nhận ra mình đã hơi xa cách với ba
-            mẹ, cho đến khi gặp em.
-          </p>
-          <p>
-            Chính em đã cho anh thấy sự ấm áp của những bữa cơm gia đình. Dù chỉ
-            là những bữa cơm rất đơn giản, nhưng anh lại thấy ngon và hạnh phúc
-            vô cùng. Cảm ơn em vì đã mang đến cho anh cảm giác mà trước đây anh
-            chưa từng để ý.
+            hơn.
           </p>
           <p>
             Được cùng em đi ăn, đi chơi, đi dạo, làm những điều bình thường
@@ -106,7 +98,7 @@ export function ScrapbookLetterSection() {
             nắm tay em bước tiếp.
           </p>
           <p>
-            Điều anh mong muốn nhất... là trong mọi tương lai của anh đều có em.
+            Điều anh mong muốn nhất là trong mọi tương lai của anh đều có em.
           </p>
           <p>
             Anh muốn được ở bên em, được chăm sóc em, được lo cho em và cả ba mẹ
@@ -133,10 +125,7 @@ export function ScrapbookLetterSection() {
             Mong rằng đây sẽ chỉ là sinh nhật đầu tiên trong rất nhiều sinh nhật
             sau này mà anh được ở bên cạnh em.
           </p>
-          <p>
-            Anh yêu em nhiều lắm. Hôm nay, ngày mai và cả những năm tháng sau
-            này... người anh muốn nắm tay vẫn luôn là em. 💕
-          </p>
+          <p>Anh yêu em❤️.</p>
           <span className="mt-2 block text-violet-500">
             Thế Dũng - anh iu của em ✎
           </span>
