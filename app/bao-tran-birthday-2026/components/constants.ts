@@ -1,19 +1,26 @@
 export const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0 },
   show: (i: number) => ({
     opacity: 1,
-    y: 0,
     transition: {
-      delay: i * 0.06,
-      duration: 0.55,
-      ease: [0.22, 1, 0.36, 1] as const,
+      delay: Math.min(i, 3) * 0.04,
+      duration: 0.45,
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   }),
 };
 
+/** Viewport shared — once, không animate lại khi scroll */
+export const fadeInView = {
+  once: true,
+  amount: 0.12,
+  margin: "0px 0px -40px 0px",
+} as const;
+
+/** Chỉ dùng CSS `.float-soft` — tránh hàng chục Framer timelines */
 export const floatSlow = {
-  animate: { y: [0, -6, 0], rotate: [-2, 2, -2] },
-  transition: { duration: 5, repeat: Infinity, ease: "easeInOut" as const },
+  animate: { y: [0, -4, 0] },
+  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
 };
 
 export const PLACEHOLDER_IMG = (seed: string, w = 400, h = 500) =>

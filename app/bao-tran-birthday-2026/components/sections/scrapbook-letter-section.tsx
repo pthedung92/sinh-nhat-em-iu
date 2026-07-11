@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Fragment } from "react";
-import { fadeUp, PLACEHOLDER_IMG } from "../constants";
+import { fadeInView, fadeUp } from "../constants";
 import { hl } from "../doodles";
 import { PhotoFrame } from "../photo-elements";
 
@@ -29,7 +29,7 @@ export function ScrapbookLetterSection() {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={fadeInView}
       className="scrapbook-liquid-glass relative rounded-3xl p-6 lg:col-span-2"
     >
       <h2 className="font-[family-name:var(--font-nunito)] text-2xl font-bold text-violet-500">

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import {
   createContext,
@@ -250,8 +250,9 @@ function BirthdayCandleSplash({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-gradient-to-b from-slate-950/92 via-violet-950/82 to-slate-950/95 px-5 py-10 backdrop-blur-md"
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-gradient-to-b from-slate-950/94 via-violet-950/88 to-slate-950/96 px-5 py-10"
       role="dialog"
       aria-modal="true"
       aria-labelledby="splash-candle-title"
@@ -369,12 +370,15 @@ export function BirthdayAudioRoot({ children }: { children: ReactNode }) {
         <source src={BIRTHDAY_THEME_MP3} type="audio/mpeg" />
       </audio>
 
-      {!entered ? (
-        <BirthdayCandleSplash
-          onBalloonsStart={startBalloons}
-          onComplete={finishSplash}
-        />
-      ) : null}
+      <AnimatePresence>
+        {!entered ? (
+          <BirthdayCandleSplash
+            key="candle-splash"
+            onBalloonsStart={startBalloons}
+            onComplete={finishSplash}
+          />
+        ) : null}
+      </AnimatePresence>
       {showBalloons ? <BalloonRiseOverlay onComplete={finishBalloons} /> : null}
 
       {previewMode ? (

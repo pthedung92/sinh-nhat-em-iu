@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
+  fadeInView,
   fadeUp,
   googleDriveVideoPreviewUrl,
   INTRO_GOOGLE_DRIVE_VIDEO_SHARE_URL,
@@ -18,13 +19,7 @@ import {
 } from "../doodles";
 import { PhotoFrame } from "../photo-elements";
 
-const introPartyEmojis: { emoji: string; delay: number }[] = [
-  { emoji: "🌟", delay: 0 },
-  { emoji: "🎀", delay: 0.2 },
-  { emoji: "👑", delay: 0.4 },
-  { emoji: "🌸", delay: 0.6 },
-  { emoji: "💝", delay: 0.8 },
-];
+const introPartyEmojis = ["🌟", "🎀", "👑", "🌸", "💝"] as const;
 
 function IntroDoodleFooter() {
   return (
@@ -43,20 +38,14 @@ function IntroDoodleFooter() {
         </div>
 
         <div className="flex w-full flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:gap-x-4">
-          {introPartyEmojis.map(({ emoji, delay }) => (
-            <motion.span
-              key={emoji + delay}
-              className="text-2xl sm:text-[1.65rem]"
-              animate={{ y: [0, -5, 0], rotate: [4, -4, 4] }}
-              transition={{
-                duration: 3.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay,
-              }}
+          {introPartyEmojis.map((emoji, i) => (
+            <span
+              key={emoji}
+              className="float-soft text-2xl sm:text-[1.65rem]"
+              style={{ animationDelay: `${i * 0.35}s` }}
             >
               {emoji}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
@@ -78,7 +67,7 @@ export function ScrapbookIntroSection() {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={fadeInView}
       className="scrapbook-liquid-glass relative rounded-3xl p-6"
     >
       <DoodleStar className="absolute -right-2 -top-2 h-8 w-8" />

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { fadeUp, PLACEHOLDER_IMG } from "../constants";
+import { fadeInView, fadeUp } from "../constants";
 import {
   DoodleStar,
   KidCrayonScribbleA,
@@ -21,27 +21,17 @@ function ScrapSticker({
   baseRotate?: number;
 }) {
   return (
-    <motion.span
+    <span
       aria-hidden
       className={`pointer-events-none inline-block max-w-[11rem] select-none rounded-xl border-2 border-violet-300/80 bg-gradient-to-br from-violet-50 via-violet-50/90 to-violet-50 px-2.5 py-1.5 text-center font-[family-name:var(--font-nunito)] text-[11px] font-extrabold leading-tight text-violet-600 shadow-[3px_3px_0_rgba(109,40,217,0.2)] sm:max-w-none sm:px-3 sm:text-xs ${className}`}
-      animate={{
-        y: [0, -3, 0],
-        rotate: [baseRotate - 1, baseRotate + 1, baseRotate - 1],
-      }}
-      transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+      style={{ transform: `rotate(${baseRotate}deg)` }}
     >
       {children}
-    </motion.span>
+    </span>
   );
 }
 
-const partyEmojis: { emoji: string; delay: number }[] = [
-  { emoji: "👑", delay: 0 },
-  { emoji: "✨", delay: 0.25 },
-  { emoji: "🎀", delay: 0.5 },
-  { emoji: "👸", delay: 0.75 },
-  { emoji: "💖", delay: 1 },
-];
+const partyEmojis = ["👑", "✨", "🎀", "👸", "💖"] as const;
 
 function EmojiStack({ className = "" }: { className?: string }) {
   return (
@@ -49,20 +39,14 @@ function EmojiStack({ className = "" }: { className?: string }) {
       className={`flex flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:gap-x-4 ${className}`}
       aria-hidden
     >
-      {partyEmojis.map(({ emoji, delay }) => (
-        <motion.span
-          key={emoji + delay}
-          className="text-2xl sm:text-[1.65rem]"
-          animate={{ y: [0, -6, 0], rotate: [-5, 5, -5] }}
-          transition={{
-            duration: 4.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay,
-          }}
+      {partyEmojis.map((emoji, i) => (
+        <span
+          key={emoji}
+          className="float-soft text-2xl sm:text-[1.65rem]"
+          style={{ animationDelay: `${i * 0.4}s` }}
         >
           {emoji}
-        </motion.span>
+        </span>
       ))}
     </div>
   );
@@ -75,7 +59,7 @@ export function ScrapbookCalendarSection() {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={fadeInView}
       className="scrapbook-liquid-glass relative overflow-visible rounded-3xl p-4 sm:p-6"
     >
       <div className="absolute right-3 top-3 z-20 rounded-full bg-yellow-200 px-3 py-1 text-xs font-bold text-slate-800 shadow-sm sm:right-4 sm:top-4 sm:text-sm">

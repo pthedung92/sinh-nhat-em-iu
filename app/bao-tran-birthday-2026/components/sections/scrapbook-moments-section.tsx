@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp, PLACEHOLDER_IMG } from "../constants";
+import { fadeInView, fadeUp, PLACEHOLDER_IMG } from "../constants";
 import { hl } from "../doodles";
 import { PhotoFrame } from "../photo-elements";
 
@@ -12,7 +12,7 @@ export function ScrapbookMomentsSection() {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={fadeInView}
       className="relative rounded-3xl border-2 border-slate-800/10 bg-white/92 p-6 shadow-[8px_8px_0_rgba(15,23,42,0.07)] lg:col-span-2"
     >
       <h3 className="font-[family-name:var(--font-nunito)] text-xl font-bold text-sky-600">

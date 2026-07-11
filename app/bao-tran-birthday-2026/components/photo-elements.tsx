@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 export type PhotoFrameProps = {
@@ -25,36 +24,21 @@ export function PhotoFrame({
         ? "border-4 border-violet-300 shadow-md [clip-path:polygon(50%_95%,7%_38%,23%_8%,50%_22%,77%_8%,93%_38%)]"
         : "rounded-2xl border-[3px] border-dashed border-amber-400 shadow-lg rotate-[-2deg]";
 
-  const inner = (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={alt}
-      className="h-full w-full object-cover"
-      loading="lazy"
-    />
-  );
-
-  const box = (
-    <div
-      className={`overflow-hidden bg-white ${border} ${className}`}
-      style={variant === "heart" ? undefined : { transformStyle: "preserve-3d" }}
-    >
-      {inner}
-    </div>
-  );
-
-  if (!tilt) return box;
-
   return (
-    <motion.div
-      whileHover={{ scale: 1.03, rotateY: 6, rotateX: -4 }}
-      transition={{ type: "spring", stiffness: 260, damping: 18 }}
-      style={{ perspective: 900 }}
-      className="inline-block"
+    <div
+      className={`inline-block overflow-hidden bg-white transition-transform duration-200 ease-out motion-reduce:transition-none ${border} ${className} ${
+        tilt ? "hover:scale-[1.02]" : ""
+      }`}
     >
-      {box}
-    </motion.div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        className="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
   );
 }
 
@@ -147,12 +131,13 @@ export function ViewfinderPhoto({
         alt={alt}
         className="h-full w-full object-cover"
         loading="lazy"
+        decoding="async"
       />
     </div>
   );
 }
 
-/** Trang trí sinh nhật nổi (thay cho cá cũ). */
+/** Trang trí sinh nhật nổi — CSS float, không Framer */
 export function FloatingPartyDeco({
   className = "",
   delay = 0,
@@ -164,18 +149,12 @@ export function FloatingPartyDeco({
   emoji?: string;
 }) {
   return (
-    <motion.span
-      className={`pointer-events-none absolute text-2xl sm:text-3xl ${className}`}
+    <span
+      className={`pointer-events-none absolute text-2xl float-soft sm:text-3xl ${className}`}
+      style={{ animationDelay: `${delay}s` }}
       aria-hidden
-      animate={{ y: [0, -10, 0], x: [0, 6, 0], rotate: [-6, 6, -6] }}
-      transition={{
-        duration: 4.5,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay,
-      }}
     >
       {emoji}
-    </motion.span>
+    </span>
   );
 }

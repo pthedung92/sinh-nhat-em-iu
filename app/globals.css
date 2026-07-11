@@ -124,19 +124,41 @@ body {
     0 -1px 0 rgba(167, 139, 250, 0.12) inset;
 }
 
-/* Scrapbook panels — liquid glass */
+/* Scrapbook panels — gần opaque nên blur nhẹ (blur mạnh + motion = giật) */
 .scrapbook-liquid-glass {
   background: linear-gradient(
     155deg,
-    rgba(255, 255, 255, 0.78) 0%,
-    rgba(255, 255, 255, 0.75) 42%,
-    rgba(252, 248, 255, 0.75) 100%
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.84) 42%,
+    rgba(252, 248, 255, 0.86) 100%
   );
-  backdrop-filter: blur(15px) saturate(1.2);
-  -webkit-backdrop-filter: blur(15px) saturate(1.2);
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
   border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
     0 10px 36px rgba(15, 23, 42, 0.1),
     0 1px 0 rgba(255, 255, 255, 0.85) inset,
     0 -1px 0 rgba(196, 181, 253, 0.14) inset;
+}
+
+/* Float nhẹ bằng CSS — rẻ hơn Framer Motion cho deco nền */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+.float-soft {
+  animation: float-soft 6.5s ease-in-out infinite;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-soft {
+    animation: none;
+  }
 }

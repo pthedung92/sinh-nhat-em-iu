@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp } from "../constants";
+import { fadeInView, fadeUp } from "../constants";
 import { CoupleGameWheel } from "../couple-game-wheel";
 
 export function ScrapbookDailySection() {
@@ -11,7 +11,7 @@ export function ScrapbookDailySection() {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={fadeInView}
       className="scrapbook-liquid-glass relative overflow-visible rounded-3xl p-8 lg:col-span-2"
     >
       <p className="text-sm font-semibold uppercase tracking-widest text-violet-500">

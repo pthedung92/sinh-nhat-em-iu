@@ -12,10 +12,10 @@ const BALLOON_COLORS = [
   { fill: "#fecdd3", stroke: "#f43f5e" },
 ] as const;
 
-const BALLOON_COUNT = 56;
-const CONFETTI_PER_SIDE = 36;
-const OVERLAY_MS = 4200;
-const CURTAIN_HOLD_MS = 2800;
+const BALLOON_COUNT = 44;
+const CONFETTI_PER_SIDE = 28;
+const OVERLAY_MS = 4600;
+const CURTAIN_HOLD_MS = 3000;
 
 const CONFETTI_COLORS = [
   "#7c3aed",
@@ -36,7 +36,7 @@ type BalloonSpec = {
   size: number;
   delay: number;
   duration: number;
-  sway: string;
+  sway: number;
   startTop: string;
   color: (typeof BALLOON_COLORS)[number];
 };
@@ -93,15 +93,15 @@ function buildBalloons(): BalloonSpec[] {
     const r2 = ((i * 41 + 7) % 89) / 89;
     const r3 = ((i * 29 + 53) % 83) / 83;
     const r4 = ((i * 61 + 11) % 71) / 71;
-    const swayPx = (r1 > 0.5 ? 1 : -1) * (12 + r2 * 28);
+    const swayPx = (r1 > 0.5 ? 1 : -1) * (10 + r2 * 24);
     return {
       id: i,
-      left: `${-8 + r1 * 108}%`,
-      size: 120 + Math.floor(r2 * 95),
-      delay: 0.06 + r3 * 0.5,
-      duration: 2.3 + r4 * 0.85,
-      sway: `${swayPx}px`,
-      startTop: `${-25 + r2 * 105}%`,
+      left: `${-6 + r1 * 106}%`,
+      size: 112 + Math.floor(r2 * 88),
+      delay: 0.04 + r3 * 0.62,
+      duration: 2.65 + r4 * 0.95,
+      sway: swayPx,
+      startTop: `${-22 + r2 * 102}%`,
       color: BALLOON_COLORS[i % BALLOON_COLORS.length]!,
     };
   });
@@ -112,59 +112,69 @@ function buildConfetti(side: "left" | "right"): ConfettiSpec[] {
     const r1 = ((i * 47 + (side === "left" ? 3 : 31)) % 91) / 91;
     const r2 = ((i * 23 + (side === "left" ? 11 : 41)) % 79) / 79;
     const r3 = ((i * 59 + (side === "left" ? 17 : 5)) % 67) / 67;
-    const reach = 36 + r2 * 30;
+    const reach = 34 + r2 * 28;
     return {
       id: `${side}-${i}`,
       side,
       top: `${8 + r1 * 78}%`,
-      w: 10 + Math.floor(r2 * 14),
-      h: 14 + Math.floor(r3 * 18),
+      w: 9 + Math.floor(r2 * 12),
+      h: 12 + Math.floor(r3 * 16),
       color: CONFETTI_COLORS[i % CONFETTI_COLORS.length]!,
-      delay: 0.1 + r1 * 0.32,
-      duration: 1.85 + r2 * 0.95,
-      rotate: (r3 - 0.5) * 840,
+      delay: 0.12 + r1 * 0.4,
+      duration: 2.1 + r2 * 1.05,
+      rotate: (r3 - 0.5) * 720,
       endX: side === "left" ? `${reach}vw` : `-${reach}vw`,
-      endY: `${90 + r2 * 160}px`,
+      endY: `${80 + r2 * 140}px`,
     };
   });
 }
 
 /**
- * CSS keyframes (GPU) thay vì hàng trăm Framer Motion timelines —
- * nhìn giống cũ nhưng mượt hơn nhiều.
+ * CSS keyframes (GPU) — đường bay nhiều đoạn + easing mềm, ít blur/shadow để FPS ổn.
  */
 const FX_CSS = `
 @keyframes bb-rise {
-  from { transform: translate3d(0, 0, 0) rotate(-2deg); }
-  to   { transform: translate3d(var(--bb-sway), -125vh, 0) rotate(3deg); }
+  0%   { transform: translate3d(0, 0, 0) rotate(-2.5deg); opacity: 0.7; }
+  12%  { opacity: 1; }
+  35%  { transform: translate3d(calc(var(--bb-sway) * 0.45), -42vh, 0) rotate(0.5deg); }
+  65%  { transform: translate3d(calc(var(--bb-sway) * 0.82), -86vh, 0) rotate(2deg); }
+  100% { transform: translate3d(var(--bb-sway), -132vh, 0) rotate(3.5deg); opacity: 1; }
 }
 @keyframes bb-confetti-l {
-  0%   { transform: translate3d(-12vw, 0, 0) rotate(0deg) scale(0.45); opacity: 0; }
-  12%  { opacity: 1; transform: translate3d(calc(var(--cf-x) * 0.35), -28px, 0) rotate(calc(var(--cf-rot) * 0.35)) scale(1.1); }
-  70%  { opacity: 1; }
-  100% { transform: translate3d(var(--cf-x), var(--cf-y), 0) rotate(var(--cf-rot)) scale(0.9); opacity: 0; }
+  0%   { transform: translate3d(-10vw, 8px, 0) rotate(0deg) scale(0.4); opacity: 0; }
+  14%  { opacity: 1; transform: translate3d(calc(var(--cf-x) * 0.28), -18px, 0) rotate(calc(var(--cf-rot) * 0.28)) scale(1.05); }
+  55%  { opacity: 1; transform: translate3d(calc(var(--cf-x) * 0.72), calc(var(--cf-y) * 0.55), 0) rotate(calc(var(--cf-rot) * 0.7)) scale(1); }
+  100% { transform: translate3d(var(--cf-x), var(--cf-y), 0) rotate(var(--cf-rot)) scale(0.88); opacity: 0; }
 }
 @keyframes bb-confetti-r {
-  0%   { transform: translate3d(12vw, 0, 0) rotate(0deg) scale(0.45); opacity: 0; }
-  12%  { opacity: 1; transform: translate3d(calc(var(--cf-x) * 0.35), -28px, 0) rotate(calc(var(--cf-rot) * 0.35)) scale(1.1); }
-  70%  { opacity: 1; }
-  100% { transform: translate3d(var(--cf-x), var(--cf-y), 0) rotate(var(--cf-rot)) scale(0.9); opacity: 0; }
+  0%   { transform: translate3d(10vw, 8px, 0) rotate(0deg) scale(0.4); opacity: 0; }
+  14%  { opacity: 1; transform: translate3d(calc(var(--cf-x) * 0.28), -18px, 0) rotate(calc(var(--cf-rot) * 0.28)) scale(1.05); }
+  55%  { opacity: 1; transform: translate3d(calc(var(--cf-x) * 0.72), calc(var(--cf-y) * 0.55), 0) rotate(calc(var(--cf-rot) * 0.7)) scale(1); }
+  100% { transform: translate3d(var(--cf-x), var(--cf-y), 0) rotate(var(--cf-rot)) scale(0.88); opacity: 0; }
 }
 .bb-rise {
   animation-name: bb-rise;
-  animation-timing-function: cubic-bezier(0.25, 0.7, 0.35, 1);
-  animation-fill-mode: forwards;
-  will-change: transform;
-  backface-visibility: hidden;
-}
-.bb-confetti {
-  animation-timing-function: cubic-bezier(0.15, 0.8, 0.3, 1);
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
   animation-fill-mode: forwards;
   will-change: transform, opacity;
   backface-visibility: hidden;
+  transform: translateZ(0);
+}
+.bb-confetti {
+  animation-timing-function: cubic-bezier(0.22, 0.7, 0.28, 1);
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 .bb-confetti-l { animation-name: bb-confetti-l; }
 .bb-confetti-r { animation-name: bb-confetti-r; }
+@media (prefers-reduced-motion: reduce) {
+  .bb-rise, .bb-confetti {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
 `;
 
 export function BalloonRiseOverlay({
@@ -180,7 +190,7 @@ export function BalloonRiseOverlay({
   );
 
   useEffect(() => {
-    const fadeTimer = window.setTimeout(() => setVisible(false), OVERLAY_MS - 650);
+    const fadeTimer = window.setTimeout(() => setVisible(false), OVERLAY_MS - 780);
     const doneTimer = window.setTimeout(onComplete, OVERLAY_MS);
     return () => {
       window.clearTimeout(fadeTimer);
@@ -197,19 +207,20 @@ export function BalloonRiseOverlay({
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
           aria-hidden
         >
           <style>{FX_CSS}</style>
 
+          {/* Không dùng backdrop-blur lúc animate — blur full-screen làm giật FPS */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-b from-violet-50/90 via-rose-50/88 to-amber-50/90 backdrop-blur-md"
-            initial={{ opacity: 0.92 }}
+            className="absolute inset-0 bg-gradient-to-b from-violet-50/95 via-rose-50/92 to-amber-50/94"
+            initial={{ opacity: 0.96 }}
             animate={{ opacity: 0 }}
             transition={{
-              duration: 0.85,
+              duration: 1.15,
               delay: CURTAIN_HOLD_MS / 1000,
-              ease: [0.4, 0, 0.2, 1],
+              ease: [0.33, 0, 0.2, 1],
             }}
           />
 
@@ -225,14 +236,11 @@ export function BalloonRiseOverlay({
                     width: b.size,
                     animationDuration: `${b.duration}s`,
                     animationDelay: `${b.delay}s`,
-                    ["--bb-sway" as string]: b.sway,
+                    ["--bb-sway" as string]: `${b.sway}px`,
                   } as CSSProperties
                 }
               >
-                <PartyBalloon
-                  color={b.color}
-                  className="h-auto w-full drop-shadow-lg"
-                />
+                <PartyBalloon color={b.color} className="h-auto w-full" />
               </div>
             ))}
           </div>
@@ -243,7 +251,7 @@ export function BalloonRiseOverlay({
               return (
                 <span
                   key={c.id}
-                  className={`bb-confetti absolute rounded-[1.5px] ring-1 ring-black/10 ${
+                  className={`bb-confetti absolute rounded-[1.5px] ${
                     fromLeft ? "bb-confetti-l" : "bb-confetti-r"
                   }`}
                   style={
@@ -253,7 +261,6 @@ export function BalloonRiseOverlay({
                       width: c.w,
                       height: c.h,
                       backgroundColor: c.color,
-                      boxShadow: "0 2px 6px rgba(15,23,42,0.28)",
                       animationDuration: `${c.duration}s`,
                       animationDelay: `${c.delay}s`,
                       ["--cf-x" as string]: c.endX,

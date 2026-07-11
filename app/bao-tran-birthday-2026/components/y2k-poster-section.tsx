@@ -11,9 +11,9 @@ import {
 export function Y2KScrapbookPoster() {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const }}
       className="relative mb-12 overflow-hidden rounded-3xl border-[3px] border-violet-400 bg-white shadow-[0_10px_0_#c084fc,0_16px_28px_rgba(0,0,0,0.09)]"
     >
       <div
@@ -127,10 +127,7 @@ export function Y2KScrapbookPoster() {
         </div>
 
         <div className="absolute left-3 top-[13rem] z-[25] sm:left-6 ">
-          <motion.div
-            whileHover={{ scale: 1.04, rotate: -2 }}
-            className="relative inline-block"
-          >
+          <div className="relative inline-block transition-transform duration-200 hover:scale-[1.02] hover:-rotate-1">
             <div className="absolute -right-1 -top-5 z-10 text-2xl drop-shadow-md" aria-hidden>
               🎉
             </div>
@@ -140,8 +137,9 @@ export function Y2KScrapbookPoster() {
               alt="Placeholder portrait sticker"
               className="h-40 w-40 rounded-2xl object-cover shadow-[5px_5px_0_#e9d5ff] sm:h-60 sm:w-50"
               loading="lazy"
+              decoding="async"
             />
-          </motion.div>
+          </div>
         </div>
 
         {/* <FloatingPartyDeco

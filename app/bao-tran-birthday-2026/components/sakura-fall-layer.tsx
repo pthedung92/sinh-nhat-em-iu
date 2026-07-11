@@ -66,20 +66,9 @@ const SAKURA_SPECS: SakuraSpec[] = [
   { leftPct: 73, durSec: 25, delaySec: 11, variant: "a", size: "h-3 w-3 sm:h-3.5 sm:w-3.5" },
   { leftPct: 88, durSec: 30, delaySec: 6, variant: "b", size: "h-3.5 w-3.5 sm:h-4 sm:w-4" },
   { leftPct: 16, durSec: 27, delaySec: 14, variant: "b", size: "h-3 w-3", smOnly: true },
+  { leftPct: 50, durSec: 31, delaySec: 19, variant: "b", size: "h-3 w-3 sm:h-4 sm:w-4" },
   { leftPct: 33, durSec: 23, delaySec: 7.5, variant: "a", size: "h-4 w-4", smOnly: true },
   { leftPct: 66, durSec: 29, delaySec: 16, variant: "a", size: "h-3.5 w-3.5", smOnly: true },
-  { leftPct: 50, durSec: 31, delaySec: 19, variant: "b", size: "h-3 w-3 sm:h-4 sm:w-4" },
-  { leftPct: 3, durSec: 24, delaySec: 3, variant: "b", size: "h-3 w-3" },
-  { leftPct: 13, durSec: 29, delaySec: 8, variant: "a", size: "h-3.5 w-3.5" },
-  { leftPct: 29, durSec: 21, delaySec: 12, variant: "b", size: "h-4 w-4" },
-  { leftPct: 46, durSec: 27, delaySec: 1.5, variant: "a", size: "h-3 w-3 sm:h-4 sm:w-4" },
-  { leftPct: 62, durSec: 32, delaySec: 17, variant: "b", size: "h-3.5 w-3.5" },
-  { leftPct: 79, durSec: 23, delaySec: 5, variant: "a", size: "h-4 w-4" },
-  { leftPct: 94, durSec: 28, delaySec: 10, variant: "b", size: "h-3 w-3" },
-  { leftPct: 20, durSec: 25, delaySec: 20, variant: "a", size: "h-3 w-3", smOnly: true },
-  { leftPct: 38, durSec: 30, delaySec: 6.5, variant: "b", size: "h-3.5 w-3.5", smOnly: true },
-  { leftPct: 55, durSec: 22, delaySec: 13, variant: "a", size: "h-4 w-4", smOnly: true },
-  { leftPct: 71, durSec: 26, delaySec: 18, variant: "b", size: "h-3 w-3", smOnly: true },
 ];
 
 /**
@@ -105,7 +94,7 @@ export function SakuraFallLayer() {
           }}
         >
           <SakuraFloret
-            className={`${s.size} opacity-[0.96] drop-shadow-[0_1px_3px_rgba(219,39,119,0.45)]`}
+            className={`${s.size} opacity-[0.9]`}
           />
         </div>
       ))}

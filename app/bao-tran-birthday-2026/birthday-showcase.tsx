@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { BirthdayAudioRoot } from "./components/birthday-audio";
 import {
   BIRTHDAY_PAGE_BG,
@@ -14,25 +13,13 @@ import { ScrapbookCalendarSection } from "./components/sections/scrapbook-calend
 import { ScrapbookDailySection } from "./components/sections/scrapbook-daily-section";
 import { ScrapbookIntroSection } from "./components/sections/scrapbook-intro-section";
 import { ScrapbookLetterSection } from "./components/sections/scrapbook-letter-section";
-import { ScrapbookMomentsSection } from "./components/sections/scrapbook-moments-section";
 import { BirthdayMusicStickyBar } from "./components/music-panel";
 import { SakuraFallLayer } from "./components/sakura-fall-layer";
 import { Y2KScrapbookPoster } from "./components/y2k-poster-section";
 
 export default function BaoTranBirthdayShowcase() {
-  const shellRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: shellRef,
-    offset: ["start end", "end start"],
-  });
-  const blobY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const blobY2 = useTransform(scrollYProgress, [0, 1], [0, 120]);
-
   return (
-    <div
-      ref={shellRef}
-      className="relative isolate min-h-screen overflow-hidden bg-slate-900 text-slate-900 selection:bg-violet-200"
-    >
+    <div className="relative isolate min-h-screen overflow-hidden bg-slate-900 text-slate-900 selection:bg-violet-200">
       <BirthdayAudioRoot>
         <BirthdayMusicStickyBar />
         <div className="pointer-events-none fixed inset-0 z-0">
@@ -52,7 +39,6 @@ export default function BaoTranBirthdayShowcase() {
             aria-hidden
           />
         </div>
-        {/* Faint “bảng vẽ”: pastel strokes only — no heavy grain */}
         <div
           className="pointer-events-none fixed inset-0 z-[1] opacity-[0.11] mix-blend-multiply sm:opacity-[0.13]"
           style={{
@@ -73,23 +59,17 @@ export default function BaoTranBirthdayShowcase() {
           }}
           aria-hidden
         />
-        <motion.div
-          style={{ y: blobY }}
-          className="pointer-events-none absolute -left-32 top-20 z-[2] h-72 w-72 rounded-full bg-sky-200/25 blur-3xl"
-        />
-        <motion.div
-          style={{ y: blobY2 }}
-          className="pointer-events-none absolute -right-24 top-1/3 z-[2] h-96 w-96 rounded-full bg-violet-200/20 blur-3xl"
-        />
+        <div className="pointer-events-none absolute -left-32 top-20 z-[2] h-72 w-72 rounded-full bg-sky-200/25 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 top-1/3 z-[2] h-96 w-96 rounded-full bg-violet-200/20 blur-3xl" />
         <HeartBackgroundField />
 
         <div className="relative z-10 mx-auto max-w-5xl px-4 pb-32 pt-10 sm:px-6 lg:px-8">
           <Y2KScrapbookPoster />
 
           <motion.header
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             className="scrapbook-liquid-glass mb-10 rounded-3xl px-5 py-6 text-center sm:px-8 sm:py-7"
           >
             <p className="font-[family-name:var(--font-be-vietnam-pro)] text-sm font-bold uppercase tracking-[0.2em] text-violet-500">
@@ -104,16 +84,12 @@ export default function BaoTranBirthdayShowcase() {
           </motion.header>
 
           <DenimRecapCollage />
-          <div className=" grid gap-2 lg:grid-cols-[60%_40%]">
-          <ScrapbookIntroSection />
-          <ScrapbookCalendarSection />
+          <div className="grid gap-2 lg:grid-cols-[60%_40%]">
+            <ScrapbookIntroSection />
+            <ScrapbookCalendarSection />
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-10">
-            
             <ScrapbookLetterSection />
-            {/* <ScrapbookMusicSection />
-            <ScrapbookReasonsSection /> */}
-            {/* <ScrapbookMomentsSection /> */}
             <ScrapbookDailySection />
           </div>
         </div>
