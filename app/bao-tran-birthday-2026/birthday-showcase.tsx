@@ -76,7 +76,7 @@ export default function BaoTranBirthdayShowcase() {
               13 . 07
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-nunito)] text-3xl font-extrabold text-slate-900 sm:text-4xl">
-              Sinh nhật nhất của{" "}
+              Sinh nhật xinh nhất của{" "}
               <span className="rounded-lg bg-violet-100 px-2 py-0.5 shadow-sm ring-1 ring-violet-200/90">
                 Phạm Trần Bảo Trân
               </span>
